@@ -208,6 +208,11 @@ contact_collection = db.contact  # Collection for contact form data
 bcrypt = Bcrypt(app)
 
 
+@app.route("/")
+def home():
+    return jsonify({"message": "Welcome to the Flask API!"}), 200
+
+
 # Register route using form-data
 @app.route('/register', methods=['POST'])
 def register():
