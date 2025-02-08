@@ -153,6 +153,32 @@
 
 
 
+# from flask import Flask, request, jsonify, send_file
+# from flask_pymongo import PyMongo
+# from pymongo import MongoClient
+# from flask_bcrypt import Bcrypt
+# from flask_cors import CORS
+# from gridfs import GridFS
+# from bson import ObjectId
+# import io
+# import re
+
+# app = Flask(__name__)
+# CORS(app)
+
+# # Configure MongoDB for image storage and user authentication
+# app.config["MONGO_URI"] = "mongodb+srv://user1:Bha%409481@cluster0.e8ngm.mongodb.net/imageDB?retryWrites=true&w=majority&appName=Cluster0"
+
+# mongo = PyMongo(app)
+# fs = GridFS(mongo.db)
+# metadata_collection = mongo.db.metadata
+# users_collection = mongo.db.users  # Collection for user data
+# contact_collection = mongo.db.contact  # Collection for contact form data
+
+# bcrypt = Bcrypt(app)
+
+
+
 from flask import Flask, request, jsonify, send_file
 from flask_pymongo import PyMongo
 from pymongo import MongoClient
@@ -170,12 +196,17 @@ CORS(app)
 app.config["MONGO_URI"] = "mongodb+srv://user1:Bha%409481@cluster0.e8ngm.mongodb.net/imageDB?retryWrites=true&w=majority&appName=Cluster0"
 
 mongo = PyMongo(app)
-fs = GridFS(mongo.db)
-metadata_collection = mongo.db.metadata
-users_collection = mongo.db.users  # Collection for user data
-contact_collection = mongo.db.contact  # Collection for contact form data
+
+# Correct way to initialize GridFS
+db = mongo.db  # Get the database from PyMongo
+fs = GridFS(db)  # Initialize GridFS with the database
+
+metadata_collection = db.metadata
+users_collection = db.users  # Collection for user data
+contact_collection = db.contact  # Collection for contact form data
 
 bcrypt = Bcrypt(app)
+
 
 # Register route using form-data
 @app.route('/register', methods=['POST'])

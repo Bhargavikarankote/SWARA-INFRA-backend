@@ -1,7 +1,6 @@
 Flask
-Flask-PyMongo
-Flask-CORS
-Flask-Bcrypt
+flask-pymongo
 gunicorn
-gridfs
-
+pymongo
+flask-bcrypt
+flask-cors
