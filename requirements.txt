@@ -3,5 +3,5 @@ Flask-PyMongo
 Flask-CORS
 Flask-Bcrypt
 gunicorn
-
+gridfs
 
