@@ -1,3 +1,6 @@
+
+
+
 # from flask import Flask, request, jsonify, send_file
 # from flask_pymongo import PyMongo
 # from flask_bcrypt import Bcrypt
@@ -16,6 +19,7 @@
 # fs = GridFS(mongo.db)
 # metadata_collection = mongo.db.metadata
 # users_collection = mongo.db.users  # Collection for user data
+# contact_collection = mongo.db.contact  # Collection for contact form data
 
 # bcrypt = Bcrypt(app)
 
@@ -117,8 +121,36 @@
 #     except:
 #         return jsonify({"error": "Image not found"}), 404
 
+
+
+# @app.route('/contact', methods=['POST'])
+# def contact():
+#     name = request.form.get("name")
+#     email = request.form.get("email")
+#     phone = request.form.get("phone")
+#     subject = request.form.get("subject")
+#     message = request.form.get("message")
+
+#     if not all([name, email, phone, subject, message]):
+#         return jsonify({"success": False, "message": "All fields are required"}), 400
+
+#     # Store the contact form data in MongoDB
+#     contact_data = {
+#         "name": name,
+#         "email": email,
+#         "phone": phone,
+#         "subject": subject,
+#         "message": message
+#     }
+#     contact_collection.insert_one(contact_data)
+
+#     return jsonify({"success": True, "message": "Form submitted successfully!"})
+
 # if __name__ == "__main__":
 #     app.run(debug=True, port=5001)
+
+
+
 
 
 from flask import Flask, request, jsonify, send_file
@@ -134,7 +166,8 @@ app = Flask(__name__)
 CORS(app)
 
 # Configure MongoDB for image storage and user authentication
-app.config["MONGO_URI"] = "mongodb://localhost:27017/imageDB"
+app.config["MONGO_URI"] = "mongodb+srv://user1:Bha%409481@cluster0.e8ngm.mongodb.net/imageDB?retryWrites=true&w=majority&appName=Cluster0"
+
 mongo = PyMongo(app)
 fs = GridFS(mongo.db)
 metadata_collection = mongo.db.metadata
@@ -241,33 +274,7 @@ def get_image(image_id):
     except:
         return jsonify({"error": "Image not found"}), 404
 
-# Contact form endpoint (POST)
-# @app.route("/contact", methods=["POST"])
-# def contact():
-#     name = request.form.get("name")
-#     email = request.form.get("email")
-#     phone_number = request.form.get("phone_number")
-#     subject = request.form.get("subject")
-#     message = request.form.get("message")
 
-#     if not all([name, email, phone_number, subject, message]):
-#         return jsonify({"message": "All fields are required"}), 400
-
-#     if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
-#         return jsonify({'message': 'Invalid email format'}), 400
-#     if not re.match(r"^[0-9]{10}$", phone_number):
-#         return jsonify({'message': 'Invalid phone number format'}), 400
-
-#     contact_data = {
-#         "name": name,
-#         "email": email,
-#         "phone_number": phone_number,
-#         "subject": subject,
-#         "message": message
-#     }
-#     contact_collection.insert_one(contact_data)
-
-#     return jsonify({"message": "Contact form submitted successfully"}), 201
 
 @app.route('/contact', methods=['POST'])
 def contact():
